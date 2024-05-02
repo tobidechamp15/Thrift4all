@@ -9,3 +9,8 @@
   line-height: 36px;
   color: #1bbf00;
 }
+
+.searchInput::placeholder {
+  margin-left: 240px;
+  color: #1bbf00;
+}
