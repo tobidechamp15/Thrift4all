@@ -14,3 +14,11 @@
   margin-left: 240px;
   color: #1bbf00;
 }
+
+.optionName {
+  font-family: Pacifico, cursive;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 21px;
+  color: rgba(110, 110, 110, 1);
+}
