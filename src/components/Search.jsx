@@ -12,7 +12,7 @@ const Search = () => {
         <FontAwesomeIcon icon={faSearch} className="absolute left-[40px]" />
         <input
           type="search"
-          className="w-full mx-4 rounded-[50px] border-black border-2   ps-[45px] py-3 form-control outline-none"
+          className="w-full mx-4 rounded-[50px] hover:bg-[#c29191] border-black border-2   ps-[45px] py-3 form-control outline-none"
           placeholder="Search for products"
           id=""
         />
