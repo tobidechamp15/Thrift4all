@@ -22,3 +22,34 @@
   line-height: 21px;
   color: rgba(110, 110, 110, 1);
 }
+
+.productContainer {
+  width: max-content !important;
+
+  /* height: auto !important; */
+}
+
+.nav-items {
+  font-family: Inter, cursive;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24.2px;
+  color: rgba(0, 0, 0, 1);
+}
+
+.logout-btn {
+  font-family: Inter, cursive;
+  font-weight: 700;
+  font-size: 20px;
+  text-align: center;
+  line-height: 24px;
+  background: #000;
+  color: white;
+  padding: 15px 55px;
+  border-radius: 30px;
+}
+
+.imageContainer {
+  width: 250px;
+  height: 250px;
+}
