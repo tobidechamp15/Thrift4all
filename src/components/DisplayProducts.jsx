@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { db } from "./firebase/config";
 import { collection, getDocs } from "firebase/firestore";
+import { ProductContext } from "./ProductContext";
 
 const DisplayProducts = () => {
   const [bags, setBags] = useState([]);
-
+  const navigate = useNavigate();
+  const { setSelectedProduct } = useContext(ProductContext);
   // Call the async function to initiate data fetching
   const product = collection(db, "product");
 
@@ -19,7 +21,7 @@ const DisplayProducts = () => {
         }));
         // console.log(filteredProducts);
         filteredProducts.map((products) => {
-          console.log(products.bags);
+          // console.log(products.bags);
           setBags(products.bags);
         });
       } catch (err) {
@@ -31,12 +33,16 @@ const DisplayProducts = () => {
     fetchData();
   }, [bags]); // empty dependency array to ensure the effect runs only once
 
+  const handleViewProduct = (bag) => {
+    setSelectedProduct(bag);
+    navigate("/productDetails");
+  };
   return (
     <>
-      <div className="font-normal text-[32px] font-[Pacifico] mx-[120px] my-[50px] ">
+      <div className="font-normal text-[32px] font-[Pacifico] md:mx-[120px] my-[50px] ">
         New Arrivals
       </div>
-      <div className="flex mx-[120px] gap-4 movies flex-wrap justify-center items-start">
+      <div className="flex md:mx-[120px] gap-4 movies xsm:flex-row md:flex-wrap justify-center items-start overflow-x-auto w-full">
         {bags.map((bag, i) => (
           <div
             key={i}
@@ -49,10 +55,13 @@ const DisplayProducts = () => {
               />
             </div>
             <span className="flex m-2 w-[250px]">{bag.name}</span>
-            <span className="flex m-2 font-bold">${bag.price}</span>
-            <div className="cursor-pointer flex items-center justify-center font-bold text-green-400">
+            <span className="flex m-2 font-bold">#{bag.price}</span>
+            <button
+              onClick={() => handleViewProduct(bag)}
+              className="cursor-pointer flex items-center justify-center font-bold text-green-400"
+            >
               View Products
-            </div>
+            </button>
           </div>
         ))}
       </div>

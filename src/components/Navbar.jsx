@@ -5,8 +5,8 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 const Navbar = () => (
   <div className="flex justify-around m-2 my-4 w-full ">
     <div className="logoStyle">Thrift4all</div>
-    <div className="flex gap-7 items-center justify-between w-[40%] my-2">
-      <div className="flex gap-4">
+    <div className="hidden md:flex gap-7 items-center justify-between w-[40%] my-2">
+      <div className="md:flex gap-4 hidden">
         <span className="nav-items">Home</span>
         <span className="nav-items">Products</span>
         <span className="nav-items">Add Products</span>
