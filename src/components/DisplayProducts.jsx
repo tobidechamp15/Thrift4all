@@ -42,7 +42,7 @@ const DisplayProducts = () => {
       <div className="font-normal text-[32px] font-[Pacifico] md:mx-[120px] my-[50px] ">
         New Arrivals
       </div>
-      <div className="flex md:mx-[120px] gap-4 movies xsm:flex-row md:flex-wrap justify-center items-start overflow-x-auto w-full">
+      <div className="flex md:mx-[120px] gap-4 movies xsm:flex-row md:flex-wrap xsm:justify-center xsm:items-start overflow-x-scroll mdw-">
         {bags.map((bag, i) => (
           <div
             key={i}
