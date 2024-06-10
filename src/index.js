@@ -7,6 +7,7 @@ import "./index.css";
 import AllProducts from "./components/AllProducts";
 import ProductDetail from "./components/ProductDetail";
 import { ProductProvider } from "./components/ProductContext";
+import SignUp from "./components/SignUp";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: "/productDetails",
     element: <ProductDetail />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
   },
 ]);
 const root = ReactDOM.createRoot(document.getElementById("root"));
