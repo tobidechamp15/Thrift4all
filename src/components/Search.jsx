@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import filterIcon from "../assets/Filter.svg";
 import addIcon from "../assets/addIcon.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,7 +19,9 @@ const Search = () => {
             id=""
           />
         </div>
-        <img src={addIcon} className="cursor-pointer " />
+        <Link to="/signup">
+          <img src={addIcon} className="cursor-pointer " />
+        </Link>
       </div>
     </div>
   );

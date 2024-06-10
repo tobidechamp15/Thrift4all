@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  font-family: "Inter", sans-serif;
+}
+
 .logoStyle {
   font-weight: 400;
   font-size: 40px;
@@ -52,4 +56,52 @@
 .imageContainer {
   width: 250px;
   height: 250px;
+}
+
+.inputGroup {
+  font-family: "Segoe UI", sans-serif;
+  margin: 1em 0;
+  width: 100%;
+
+  /* max-width: 190px; */
+  position: relative;
+}
+
+.inputGroup input {
+  font-size: 100%;
+  padding: 0.8em;
+  outline: none;
+  border: 2px solid #bdbdbd;
+  background-color: transparent;
+  border-radius: 16px;
+  width: 100%;
+}
+
+.inputGroup label {
+  font-size: 100%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  padding: 0.8em;
+  margin-left: 0.5em;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  color: rgb(100, 100, 100);
+  transform: translateY(-50%);
+}
+
+.inputGroup input:focus ~ label,
+.inputGroup input:not(:placeholder-shown) ~ label {
+  /* transform: translateY(-100%) scale(0.9); */
+  margin: 0;
+  margin-left: 1.3em;
+
+  /* padding: 0.4em; */
+  top: 0;
+  background-color: white;
+  border-radius: 100%;
+}
+
+.inputGroup input:focus {
+  border-color: rgb(150, 150, 200);
 }
