@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
-import { app } from "./firebase/config";
+import { app, db } from "./firebase/config";
 // import { doc, setDoc } from "firebase/firestore";
 import {
   getAuth,
@@ -9,6 +9,7 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import backIconWhite from "../assets/backIconwhite.svg";
 
 const SignUp = () => {
@@ -18,6 +19,7 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [errorEmail, setErrorEmail] = useState("");
   // const navigate = useNavigate();
 
   const handleName = (e) => {
@@ -27,7 +29,19 @@ const SignUp = () => {
     setUsername(e.target.value);
   };
   const handleEmail = (e) => {
-    setEmail(e.target.value);
+    const inputEmail = e.target.value;
+
+    // Regex pattern to validate email ends with @run.edu.ng
+    const emailPattern = /^[a-zA-Z0-9_.+-]+@run\.edu\.ng$/;
+
+    if (emailPattern.test(inputEmail)) {
+      setEmail(inputEmail);
+      setErrorEmail(""); // Clear error if email is valid
+    } else {
+      setEmail(inputEmail);
+      setErrorEmail("Email must be in the format @run.edu.ng");
+    }
+    // setEmail(e.target.value);
   };
   const handlePassword = (e) => {
     setPassword(e.target.value);
@@ -47,13 +61,33 @@ const SignUp = () => {
       );
       console.log(response);
       await sendEmailVerification(response.user);
+      createUserProfile(response.user, username, name);
       // navigate("/login");
     } catch (err) {
       setLoading(false);
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
+  const createUserProfile = (user, username, name) => {
+    const userDocRef = doc(db, "users", user.uid); // Reference to the user's document using their UID
+    const userProfileData = {
+      username: username,
+      email: user.email,
+      verificationStatus: user.emailVerified,
+      name: name,
+      // Add other user-specific data as needed
+    };
+    setDoc(userDocRef, userProfileData)
+      .then(() => {
+        return true;
+      })
+      .catch((error) => {
+        console.error("Error Creating user Profile", error);
+      });
+  };
   return (
     <div className="flex w-full">
       <div className="h-screen md:w-1/3 flex p-3 justify-between items-center bg-black flex-col text-white">
@@ -112,6 +146,11 @@ const SignUp = () => {
             />
             <label htmlFor="name">StudentMail</label>
           </div>
+          {errorEmail && (
+            <div className="text-red-600 text-start w-full ps-2">
+              {errorEmail}
+            </div>
+          )}
           <div className="inputGroup flex items-center justify-center">
             <input
               type="text"
@@ -139,7 +178,7 @@ const SignUp = () => {
           <div>
             <button
               type="submit"
-              className="btn btn-outline-success p-4 rounded-full"
+              className="btn btn-outline-success py-6 px-10 rounded-[60px]"
               disabled={loading}
               // onClick={handleSubmit}
             >
