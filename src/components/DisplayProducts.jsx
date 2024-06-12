@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { db, userId } from "./firebase/config";
 import { collection, getDocs } from "firebase/firestore";
 import { ProductContext } from "./ProductContext";
+import { useState } from "react";
 
 const DisplayProducts = () => {
-  // const [bags, setBags] = useState([]);
+  const [product, setProduct] = useState([]);
   const navigate = useNavigate();
   const { setSelectedProduct } = useContext(ProductContext);
   // Call the async function to initiate data fetching
@@ -21,6 +22,7 @@ const DisplayProducts = () => {
           id: doc.id,
         }));
         console.log(filteredProducts);
+        setProduct(filteredProducts);
       } catch (err) {
         // alert(err);
         console.error(err);
@@ -34,21 +36,22 @@ const DisplayProducts = () => {
     setSelectedProduct(bag);
     navigate("/productDetails");
   };
-  handleViewProduct();
+  // handleViewProduct();
+
   return (
     <>
       <div className="font-normal text-[32px] font-[Pacifico] md:mx-[120px] my-[50px] ">
         New Arrivals
       </div>
       <div className="flex md:mx-[120px] gap-4 movies xsm:flex-row md:flex-wrap xsm:justify-center xsm:items-start overflow-x-scroll mdw-">
-        {/* {bags.map((bag, i) => (
+        {product.map((bag, i) => (
           <div
             key={i}
             className="flex flex-col productContainer border-1 border-[rgba(179, 20, 48, 1)] p-2  "
           >
             <div className="imageContainer">
               <img
-                src={bag.image}
+                src={bag.imageSrc}
                 className="w-full rounded-[12px] h-full bg-slate-300"
               />
             </div>
@@ -61,7 +64,7 @@ const DisplayProducts = () => {
               View Products
             </button>
           </div>
-        ))} */}
+        ))}
       </div>
     </>
   );

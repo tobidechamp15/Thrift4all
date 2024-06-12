@@ -77,6 +77,7 @@ const AddProducts = () => {
         businessLink,
         imageSrc,
       });
+      combinedProducts();
       setPrice("");
       setBusinessLink("");
       setImageSrc("");
@@ -87,6 +88,23 @@ const AddProducts = () => {
     } catch (error) {
       console.error("Error adding product: ", error);
       alert("Error adding product.");
+    }
+  };
+
+  const combinedProducts = async () => {
+    try {
+      const userCombinedProductsRef = collection(db, "product");
+      await addDoc(userCombinedProductsRef, {
+        userName,
+        productName,
+        price,
+        productDescription,
+        businessLink,
+        imageSrc,
+        userId,
+      });
+    } catch (err) {
+      console.error(err);
     }
   };
 
