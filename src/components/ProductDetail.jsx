@@ -43,14 +43,14 @@ const ProductDetail = () => {
         <div className="product-details">
           <div className="imageContainer">
             <img
-              src={selectedProduct.image}
+              src={selectedProduct.imageSrc}
               className="w-full rounded-[12px] h-full bg-slate-300"
             />
           </div>
-          <h4 className="text-4xl">{selectedProduct.name}</h4>
-
+          <h4 className="text-4xl">{selectedProduct.productName}</h4>
           <p className="text-2xl">Price: ${selectedProduct.price}</p>
-          <p className="text-lg">{selectedProduct.description}</p>
+          <p className="text-lg">{selectedProduct.productDescription}</p>
+          <p className="text-lg">Brand: {selectedProduct.userName}</p>
         </div>
       </div>
     </>
