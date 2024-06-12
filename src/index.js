@@ -10,6 +10,7 @@ import { ProductProvider } from "./components/ProductContext";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import AddProducts from "./components/AddProducts";
+import UserProducts from "./components/UserProducts";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "/addproducts",
     element: <AddProducts />,
+  },
+  {
+    path: "/user-products",
+    element: <UserProducts />,
   },
 ]);
 const root = ReactDOM.createRoot(document.getElementById("root"));
