@@ -1,49 +1,47 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { db } from "./firebase/config";
+import { db, userId } from "./firebase/config";
 import { collection, getDocs } from "firebase/firestore";
 import { ProductContext } from "./ProductContext";
 
 const DisplayProducts = () => {
-  const [bags, setBags] = useState([]);
+  // const [bags, setBags] = useState([]);
   const navigate = useNavigate();
   const { setSelectedProduct } = useContext(ProductContext);
   // Call the async function to initiate data fetching
-  const product = collection(db, "product");
+  // const product = collection(db, "product");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getDocs(product);
+        const productRef = collection(db, "products", userId, "userProducts");
+        const data = await getDocs(productRef);
         const filteredProducts = data.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id,
         }));
-        // console.log(filteredProducts);
-        filteredProducts.map((products) => {
-          // console.log(products.bags);
-          setBags(products.bags);
-        });
+        console.log(filteredProducts);
       } catch (err) {
-        alert(err);
+        // alert(err);
         console.error(err);
       }
     };
 
     fetchData();
-  }, [bags]); // empty dependency array to ensure the effect runs only once
+  }, []); // empty dependency array to ensure the effect runs only once
 
   const handleViewProduct = (bag) => {
     setSelectedProduct(bag);
     navigate("/productDetails");
   };
+  handleViewProduct();
   return (
     <>
       <div className="font-normal text-[32px] font-[Pacifico] md:mx-[120px] my-[50px] ">
         New Arrivals
       </div>
       <div className="flex md:mx-[120px] gap-4 movies xsm:flex-row md:flex-wrap xsm:justify-center xsm:items-start overflow-x-scroll mdw-">
-        {bags.map((bag, i) => (
+        {/* {bags.map((bag, i) => (
           <div
             key={i}
             className="flex flex-col productContainer border-1 border-[rgba(179, 20, 48, 1)] p-2  "
@@ -63,7 +61,7 @@ const DisplayProducts = () => {
               View Products
             </button>
           </div>
-        ))}
+        ))} */}
       </div>
     </>
   );
