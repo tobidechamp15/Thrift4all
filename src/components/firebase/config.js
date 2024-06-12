@@ -23,6 +23,8 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app);
+const userId = localStorage.getItem("userId");
 
 export { analytics };
 export { db };
+export { userId };

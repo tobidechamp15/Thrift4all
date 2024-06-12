@@ -6,7 +6,7 @@ import arrow from "../assets/Arrow.svg";
 
 const FilterOptions = () => {
   return (
-    <div className="w-full flex justify-center" >
+    <div className="w-full flex justify-center">
       <div className="flex gap-2 overflow- xsm:w-[100%] w-[70%] ">
         <div className="flex flex-col gap-1 m-2 cursor-pointer transition-all ease-in-out hover:bg-[#dddbdb] rounded-[25px] justify-between border-1 border-[#B31430] w-[450px] h-[200px] items-center bg-[#B715321A] p-3">
           <img src={clothIcon} className=" w-auto h-full" />
@@ -24,7 +24,7 @@ const FilterOptions = () => {
           <span className=" font-normal text-xs font-[Pacifico]">View all</span>
           <img src={arrow} alt="" />
         </div>
-      </div>{" "}
+      </div>
     </div>
   );
 };

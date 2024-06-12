@@ -9,6 +9,7 @@ import ProductDetail from "./components/ProductDetail";
 import { ProductProvider } from "./components/ProductContext";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
+import AddProducts from "./components/AddProducts";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/addproducts",
+    element: <AddProducts />,
   },
 ]);
 const root = ReactDOM.createRoot(document.getElementById("root"));

@@ -62,12 +62,11 @@ body {
   font-family: "Segoe UI", sans-serif;
   margin: 1em 0;
   width: 100%;
-
-  /* max-width: 190px; */
   position: relative;
 }
 
-.inputGroup input {
+.inputGroup input,
+textarea {
   font-size: 100%;
   padding: 0.8em;
   outline: none;
@@ -82,7 +81,7 @@ body {
   position: absolute;
   top: 50%;
   left: 0;
-  padding: 0.8em;
+  padding: 0 0.8em;
   margin-left: 0.5em;
   pointer-events: none;
   transition: all 0.3s ease;
@@ -91,7 +90,9 @@ body {
 }
 
 .inputGroup input:focus ~ label,
-.inputGroup input:not(:placeholder-shown) ~ label {
+.inputGroup input:not(:placeholder-shown) ~ label,
+.inputGroup textarea:focus ~ label,
+.inputGroup textarea:not(:placeholder-shown) ~ label {
   /* transform: translateY(-100%) scale(0.9); */
   margin: 0;
   margin-left: 1.3em;
@@ -102,6 +103,7 @@ body {
   border-radius: 100%;
 }
 
-.inputGroup input:focus {
+.inputGroup input:focus,
+textarea {
   border-color: rgb(150, 150, 200);
 }
