@@ -6,8 +6,8 @@ import { ProductContext } from "./ProductContext";
 import { useState } from "react";
 
 const DisplayProducts = () => {
-  const [product, setProduct] = useState([]);
   const navigate = useNavigate();
+  const [product, setProduct] = useState([]);
   const { setSelectedProduct } = useContext(ProductContext);
   // Call the async function to initiate data fetching
   // const product = collection(db, "product");

@@ -20,12 +20,20 @@ const ProductDetail = () => {
         </Link>
         <div className="hidden md:flex gap-7 items-center justify-between w-[40%] my-2">
           <div className="md:flex gap-4 hidden">
-            <span className="nav-items">Home</span>
-            <span className="nav-items">Products</span>
-            <span className="nav-items">Add Products</span>
+            <Link to="/" className="nav-items">
+              Home
+            </Link>
+            <Link to="/user-products" className="nav-items">
+              Products
+            </Link>
+            <Link to="/addproducts" className="nav-items">
+              Add Products
+            </Link>
             <span className="nav-items">Contact</span>
           </div>
-          <div className="logout-btn">LOGOUT</div>
+          <Link to="/" className="logout-btn">
+            LOGOUT
+          </Link>
         </div>
         <FontAwesomeIcon
           icon={faBars}

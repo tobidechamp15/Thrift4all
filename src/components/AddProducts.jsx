@@ -110,9 +110,9 @@ const AddProducts = () => {
 
   return (
     <div className="flex items-center justify-center flex-col container py-4">
-      <div className="w-full items-start logoStyle hidden md:flex      ">
+      <Link to="/" className="w-full items-start logoStyle hidden md:flex">
         Thrift4all
-      </div>
+      </Link>
       <Link to="/" className="flex md:hidden  w-full justify-end">
         Home
       </Link>
