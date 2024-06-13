@@ -43,11 +43,11 @@ const DisplayProducts = () => {
       <div className="font-normal text-[32px] font-[Pacifico] md:mx-[120px] my-[50px] ">
         New Arrivals
       </div>
-      <div className="flex md:mx-[120px] gap-4 movies xsm:flex-row md:flex-wrap xsm:justify-center xsm:items-start overflow-x-scroll mdw-">
+      <div className="flex md:mx-[120px] gap-4 movies xsm:flex-row md:flex-wrap  xsm:items-start overflow-x-scroll mdw-">
         {product.map((bag, i) => (
           <div
             key={i}
-            className="flex flex-col productContainer border-1 border-[rgba(179, 20, 48, 1)] p-2  "
+            className="flex flex-col productContainer border-1 border-[rgba(179, 20, 48, 1)] p-2  productContainer"
           >
             <div className="imageContainer">
               <img

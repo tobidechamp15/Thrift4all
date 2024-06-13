@@ -1,14 +1,14 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Search from "./Search";
-import FilterOptions from "./FilterOptions";
+// import FilterOptions from "./FilterOptions";
 import DisplayProducts from "./DisplayProducts";
 
 const AllProducts = () => (
-  <div className="m-3 ">
+  <div className="container w-full">
     <Navbar />
     <Search />
-    <FilterOptions />
+    {/* <FilterOptions /> */}
     <DisplayProducts />
   </div>
 );

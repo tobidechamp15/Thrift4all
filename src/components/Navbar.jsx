@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => (
-  <div className="flex justify-around m-2 my-4 w-full ">
+  <div className="flex justify-between md:justify-around py-4 w-full items-center">
     <div className="logoStyle">Thrift4all</div>
     <div className="hidden md:flex gap-7 items-center justify-between w-[40%] my-2">
       <div className="md:flex gap-4 hidden">
@@ -17,12 +17,12 @@ const Navbar = () => (
         </Link>
         <span className="nav-items">Contact</span>
       </div>
-      <div className="logout-btn">LOGOUT</div>
     </div>
+    <div className="logout-btn hidden md:flex">LOGOUT</div>
     <FontAwesomeIcon
       icon={faBars}
-      size="2x"
-      className="mx-[39px] block md:hidden"
+      // size="2x"
+      className="mx-[39px] block md:hidden text-2xl"
     />
   </div>
 );
