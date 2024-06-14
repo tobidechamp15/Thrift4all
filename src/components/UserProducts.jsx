@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import backIcon from "../assets/backIcon.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import Sidebar from "./Sidebar";
 
 const UserProducts = () => {
   const [products, setProducts] = useState("");
@@ -29,6 +30,12 @@ const UserProducts = () => {
 
     fetchData();
   }, []); // empty dependency array to ensure the effect runs only once
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -60,6 +67,7 @@ const UserProducts = () => {
                 icon={faBars}
                 size="lg"
                 className="text-gray-500"
+                onClick={toggleSidebar}
               />
             </div>
           </div>
@@ -94,6 +102,7 @@ const UserProducts = () => {
               </div>
             </div>
           ))}
+          <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         </div>
       ) : (
         <p className="text-center text-gray-500">No products found.</p>

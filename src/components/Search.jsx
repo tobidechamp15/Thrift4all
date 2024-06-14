@@ -19,7 +19,7 @@ const Search = () => {
             id=""
           />
         </div>
-        <Link to="/signup">
+        <Link to="/addproducts">
           <img src={addIcon} className="cursor-pointer " />
         </Link>
       </div>

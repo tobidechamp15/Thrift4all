@@ -90,7 +90,7 @@ const SignUp = () => {
   };
   return (
     <div className="flex w-full">
-      <div className="h-screen md:w-1/3 flex p-3 justify-between items-center bg-black flex-col text-white">
+      <div className="h-screen md:w-1/3 md:flex p-3 justify-between items-center bg-black flex-col text-white hidden w-full">
         <div className="flex  items-start w-full">
           <Link to="/">
             <img src={backIconWhite} className="w-[38px] cursor-pointer" />
@@ -100,10 +100,10 @@ const SignUp = () => {
           <Link to="/" className="logoStyle text-6xl">
             Thrift4all
           </Link>
-          <span className="my-5 text-2xl">LET GET YOU STARTED</span>
+          <span className="my-5 text-2xl text-center">LET GET YOU STARTED</span>
         </div>
 
-        <div>
+        <div className="text-center flex flex-wrap gap-2 items-center justify-center">
           Already have an account?
           <Link to="/login" className="text-blue-400">
             Login
@@ -111,15 +111,15 @@ const SignUp = () => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-[24px] w-2/3 items-center justify-center">
-        <span className="text-2xl font-medium w-2/3 text-start">
+      <div className="flex flex-col gap-[24px] md:w-2/3 items-center justify-center w-full ">
+        <span className="text-2xl font-medium md:w-2/3 text-start">
           Create an Account
         </span>
 
         {error && <div className="text-red-500">{error}</div>}
 
         <form
-          className="w-2/3 flex justify-center items-center flex-col gap-[24] "
+          className="md:w-2/3 flex justify-center items-center flex-col gap-[24] w-full p-2 "
           onSubmit={handleSubmit}
         >
           <div className="inputGroup flex items-center justify-center">
