@@ -47,7 +47,8 @@ const DisplayProducts = () => {
         {product.map((bag, i) => (
           <div
             key={i}
-            className="flex flex-col productContainer border-1 border-[rgba(179, 20, 48, 1)] p-2  productContainer"
+            className="flex flex-col productContainer border-1 border-[rgba(179, 20, 48, 1)] p-2  productContainer cursor-pointer w-[250px]"
+            onClick={() => handleViewProduct(bag)}
           >
             <div className="imageContainer">
               <img
@@ -55,7 +56,9 @@ const DisplayProducts = () => {
                 className="w-full rounded-[12px] h-full bg-slate-300"
               />
             </div>
-            <span className="flex m-2 w-[250px]">{bag.name}</span>
+            <span className="flex p-2 w-[250px] text-ellipsis whitespace-nowrap overflow-hidden ">
+              {bag.productName}
+            </span>
             <span className="flex m-2 font-bold">#{bag.price}</span>
             <button
               onClick={() => handleViewProduct(bag)}

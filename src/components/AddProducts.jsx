@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { db } from "./firebase/config";
 import { doc, getDoc, addDoc, collection } from "firebase/firestore";
+import Navbar from "./Navbar";
 
 const AddProducts = () => {
   const [imageSrc, setImageSrc] = useState(null);
@@ -12,6 +13,8 @@ const AddProducts = () => {
   const [price, setPrice] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [businessLink, setBusinessLink] = useState("");
+  const [message, setMessage] = useState("");
+  const [slideOut, setSlideOut] = useState(false);
 
   const userId = localStorage.getItem("userId");
 
@@ -78,13 +81,13 @@ const AddProducts = () => {
         imageSrc,
       });
       combinedProducts();
-      setPrice("");
-      setBusinessLink("");
-      setImageSrc("");
-      setProductDescription("");
-      setProductName("");
+      // setPrice("");
+      // setBusinessLink("");
+      // setImageSrc("");
+      // setProductDescription("");
+      // setProductName("");
       setUserName(userName);
-      alert("Product added successfully!");
+      setMessage("Product added successfully!");
     } catch (error) {
       console.error("Error adding product: ", error);
       alert("Error adding product.");
@@ -103,19 +106,35 @@ const AddProducts = () => {
         imageSrc,
         userId,
       });
+      useEffect(() => {
+        if (message) {
+          const timer = setTimeout(() => {
+            setSlideOut(true);
+          }, 3000); // Slide out after 3 seconds
+
+          return () => clearTimeout(timer); // Cleanup the timer on component unmount or when error changes
+        }
+      }, [message]);
     } catch (err) {
+      setMessage(err.message);
+      setSlideOut(false); // Ensure the error message slides in again
       console.error(err);
     }
+    setMessage("");
   };
 
   return (
     <div className="flex items-center justify-center flex-col container py-4">
-      <Link to="/" className="w-full items-start logoStyle hidden md:flex">
-        Thrift4all
-      </Link>
-      <Link to="/" className="flex md:hidden  w-full justify-end">
-        Home
-      </Link>
+      {message && (
+        <div
+          className={`text-red-500 fixed p-6 top-0 right-[10px] text-xl shadow-xl rounded-lg m-4 ${
+            slideOut ? "slide-out" : ""
+          }`}
+        >
+          {message}
+        </div>
+      )}
+      <Navbar />
       <div>
         <span className=" text-2xl font-[Pacifico] text-green-500 font-medium">
           Add Products

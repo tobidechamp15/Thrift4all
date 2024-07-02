@@ -2,10 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Base styles */
 body {
   font-family: "Inter", sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: #388e3c #f5f5f5;
 }
 
+/* Custom scrollbar styles for WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #e0e0e0; /* Light grey */
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f5f5; /* Slightly off-white */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #388e3c; /* Dark green */
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #2e7d32; /* Slightly darker green */
+}
+
+/* Styles */
 .logoStyle {
   font-weight: 400;
   font-size: 40px;
@@ -91,11 +115,8 @@ textarea {
 .inputGroup input:not(:placeholder-shown) ~ label,
 .inputGroup textarea:focus ~ label,
 .inputGroup textarea:not(:placeholder-shown) ~ label {
-  /* transform: translateY(-100%) scale(0.9); */
   margin: 0;
   margin-left: 1.3em;
-
-  /* padding: 0.4em; */
   top: 0;
   background-color: white;
   border-radius: 100%;
@@ -115,10 +136,9 @@ textarea {
   transition: 0.5s;
   transform: translateY(-10px);
   transition-timing-function: ease-in-out;
-
-  /* transform: scale(1.05); */
 }
 
+/* Media queries */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .movies {
     flex-direction: row !important;
@@ -142,4 +162,38 @@ textarea {
   .logoStyle {
     font-size: 30px;
   }
+}
+
+/* Keyframes */
+@keyframes slideInFromRightTop {
+  0% {
+    transform: translate(100%, -100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToRightTop {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(100%, -100%);
+    opacity: 0;
+  }
+}
+
+/* Animation */
+.slide-in {
+  animation: slideInFromRightTop 0.5s ease-out forwards;
+}
+
+.slide-out {
+  animation: slideOutToRightTop 0.5s ease-out backwards;
 }
