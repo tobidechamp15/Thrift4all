@@ -1,21 +1,33 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  const handleLogOut = () => {
+    localStorage.removeItem("userId");
+    navigate("/");
+  };
+
   return (
     <div className="flex justify-between md:justify-around py-4 w-full items-center">
-      <div className="logoStyle">Thrift4all</div>
+      <Link to="/" className="logoStyle">
+        Thrift4all
+      </Link>
       <div className="hidden md:flex gap-7 items-center justify-between my-2">
         <div className="md:flex gap-4 hidden">
-          <span className="nav-items">Home</span>
+          <Link to="/products" className="nav-items">
+            Home
+          </Link>
           <Link to="/user-products" className="nav-items">
             Products
           </Link>
@@ -25,7 +37,9 @@ const Navbar = () => {
           <span className="nav-items">Contact</span>
         </div>
       </div>
-      <div className="logout-btn hidden md:flex">LOGOUT</div>
+      <div onClick={handleLogOut} className="logout-btn hidden md:flex">
+        LOGOUT
+      </div>
       <FontAwesomeIcon
         icon={faBars}
         onClick={toggleSidebar}

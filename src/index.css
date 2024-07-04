@@ -38,6 +38,14 @@ body {
   color: #1bbf00;
 }
 
+.logoStyles {
+  font-weight: 400;
+  font-size: 64px;
+  font-family: Pacifico, cursive;
+  line-height: 24px;
+  color: #1bbf00;
+}
+
 .searchInput::placeholder {
   margin-left: 240px;
   color: #1bbf00;
@@ -78,6 +86,53 @@ body {
 .imageContainer {
   width: 250px;
   height: 250px;
+}
+
+.inputGroups {
+  font-family: "Segoe UI", sans-serif;
+  margin: 1em 0;
+  width: 45%;
+  position: relative;
+}
+
+.inputGroups input,
+textarea {
+  font-size: 100%;
+  padding: 0.8em;
+  outline: none;
+  border: 2px solid #bdbdbd;
+  background-color: transparent;
+  border-radius: 16px;
+  width: 100%;
+}
+
+.inputGroups label {
+  font-size: 100%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  padding: 0 0.8em;
+  margin-left: 0.5em;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  color: rgb(100, 100, 100);
+  transform: translateY(-50%);
+}
+
+.inputGroups input:focus ~ label,
+.inputGroups input:not(:placeholder-shown) ~ label,
+.inputGroups textarea:focus ~ label,
+.inputGroups textarea:not(:placeholder-shown) ~ label {
+  margin: 0;
+  margin-left: 1.3em;
+  top: 0;
+  background-color: white;
+  border-radius: 100%;
+}
+
+.inputGroups input:focus,
+textarea {
+  border-color: rgb(150, 150, 200);
 }
 
 .inputGroup {
@@ -196,4 +251,24 @@ textarea {
 
 .slide-out {
   animation: slideOutToRightTop 0.5s ease-out backwards;
+}
+
+.bg-img {
+  background-image: url("../src/assets/bg-img.svg");
+  background-size: cover;
+  background-position: center;
+  height: 1100.9px;
+}
+
+.land-items {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(0, 0, 0, 1);
+  text-align: center;
+}
+
+.aboutUs {
+  margin-top: -250px;
+  height: 590px;
 }

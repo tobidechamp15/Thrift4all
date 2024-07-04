@@ -11,10 +11,15 @@ import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import AddProducts from "./components/AddProducts";
 import UserProducts from "./components/UserProducts";
+import Landing from "./components/Landing";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Landing />,
+  },
+  {
+    path: "/products",
     element: <AllProducts />,
   },
   {
