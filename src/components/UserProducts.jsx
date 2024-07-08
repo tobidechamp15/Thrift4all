@@ -16,7 +16,6 @@ const UserProducts = () => {
           ...doc.data(),
           id: doc.id,
         }));
-        console.log(filteredProducts);
         setProducts(filteredProducts);
         // setBags(products);
       } catch (err) {
@@ -26,7 +25,7 @@ const UserProducts = () => {
     };
 
     fetchData();
-  }, []);
+  }, [products]);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 

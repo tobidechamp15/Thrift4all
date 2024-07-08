@@ -20,31 +20,45 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-between md:justify-around py-4 w-full items-center">
-      <Link to="/" className="logoStyle">
+      <Link
+        to="/"
+        className="text-3xl font-bold text-gray-800 hover:text-gray-900 transition duration-300"
+      >
         Thrift4all
       </Link>
-      <div className="hidden md:flex gap-7 items-center justify-between my-2">
-        <div className="md:flex gap-4 hidden">
-          <Link to="/products" className="nav-items">
+      <div className="hidden md:flex gap-7 items-center">
+        <div className="md:flex gap-4">
+          <Link
+            to="/products"
+            className="text-lg text-gray-600 hover:text-gray-900 transition duration-300"
+          >
             Home
           </Link>
-          <Link to="/user-products" className="nav-items">
+          <Link
+            to="/user-products"
+            className="text-lg text-gray-600 hover:text-gray-900 transition duration-300"
+          >
             Products
           </Link>
-          <Link to="/addproducts" className="nav-items">
+          <Link
+            to="/addproducts"
+            className="text-lg text-gray-600 hover:text-gray-900 transition duration-300"
+          >
             Add Products
           </Link>
-          <span className="nav-items">Contact</span>
+          <span className="text-lg text-gray-600">Contact</span>
         </div>
       </div>
-      <div onClick={handleLogOut} className="logout-btn hidden md:flex">
+      <div
+        onClick={handleLogOut}
+        className="text-lg text-red-600 cursor-pointer hidden md:block"
+      >
         LOGOUT
       </div>
       <FontAwesomeIcon
         icon={faBars}
         onClick={toggleSidebar}
-        // size="2x"
-        className="mx-[39px] block md:hidden text-2xl"
+        className="block md:hidden text-3xl text-gray-800 hover:text-gray-900 transition duration-300"
       />
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
     </div>

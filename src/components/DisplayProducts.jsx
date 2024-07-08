@@ -1,75 +1,82 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { db, userId } from "./firebase/config";
+import { db } from "./firebase/config";
 import { collection, getDocs } from "firebase/firestore";
 import { ProductContext } from "./ProductContext";
-import { useState } from "react";
 
 const DisplayProducts = () => {
   const navigate = useNavigate();
-  const [product, setProduct] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
   const { setSelectedProduct } = useContext(ProductContext);
-  // Call the async function to initiate data fetching
-  // const product = collection(db, "product");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productRef = collection(db, "products", userId, "userProducts");
+        const productRef = collection(db, "product");
         const data = await getDocs(productRef);
         const filteredProducts = data.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id,
         }));
-        console.log(filteredProducts);
-        setProduct(filteredProducts);
+        setProducts(filteredProducts);
+        setLoading(false); // Update loading state after data fetch
       } catch (err) {
-        // alert(err);
         console.error(err);
+        setLoading(false); // Handle loading state in case of error
       }
     };
 
     fetchData();
-  }, []); // empty dependency array to ensure the effect runs only once
+  }, []);
 
-  const handleViewProduct = (bag) => {
-    setSelectedProduct(bag);
+  const handleViewProduct = (product) => {
+    setSelectedProduct(product);
     navigate("/productDetails");
   };
-  // handleViewProduct();
 
   return (
-    <>
-      <div className="font-normal text-[32px] font-[Pacifico] md:mx-[120px] my-[50px] ">
-        New Arrivals
-      </div>
-      <div className="flex md:mx-[120px] gap-4 movies xsm:flex-row md:flex-wrap  xsm:items-start overflow-x-scroll mdw-">
-        {product.map((bag, i) => (
-          <div
-            key={i}
-            className="flex flex-col productContainer border-1 border-[rgba(179, 20, 48, 1)] p-2  productContainer cursor-pointer w-[250px]"
-            onClick={() => handleViewProduct(bag)}
-          >
-            <div className="imageContainer">
-              <img
-                src={bag.imageSrc}
-                className="w-full rounded-[12px] h-full bg-slate-300"
-              />
-            </div>
-            <span className="flex p-2 w-[250px] text-ellipsis whitespace-nowrap overflow-hidden ">
-              {bag.productName}
-            </span>
-            <span className="flex m-2 font-bold">#{bag.price}</span>
-            <button
-              onClick={() => handleViewProduct(bag)}
-              className="cursor-pointer flex items-center justify-center font-bold text-green-400"
+    <div className="mx-4 md:mx-12 my-8">
+      <div className="text-2xl font-bold mb-6">New Arrivals</div>
+
+      {loading ? ( // Conditional rendering based on loading state
+        <div className="flex items-center justify-center mt-8">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className="border border-gray-300 rounded-lg overflow-hidden shadow-md cursor-pointer"
+              onClick={() => handleViewProduct(product)}
             >
-              View Products
-            </button>
-          </div>
-        ))}
-      </div>
-    </>
+              <div className="h-40 overflow-hidden">
+                <img
+                  src={product.imageSrc}
+                  alt={product.productName}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+              <div className="p-4">
+                <div className="font-bold text-lg mb-2">
+                  {product.productName}
+                </div>
+                <div className="text-gray-700 mb-2">
+                  Price: ${product.price}
+                </div>
+                <button
+                  onClick={() => handleViewProduct(product)}
+                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-3 rounded focus:outline-none text-sm"
+                >
+                  View Product
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 

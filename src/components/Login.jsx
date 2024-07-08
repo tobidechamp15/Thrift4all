@@ -22,7 +22,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(false);
+    setError("");
 
     try {
       const auth = getAuth(app);
@@ -34,19 +34,25 @@ const Login = () => {
       const user = userCredentials.user;
       localStorage.setItem("userId", user.uid);
       console.log(user);
-      navigate("/");
+      navigate("/products");
     } catch (error) {
-      console.log(error);
+      setError("Failed to log in. Please check your credentials.");
+      console.error("Login Error:", error);
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <div className="flex w-full">
       <div className="h-screen md:w-1/3 flex p-3 justify-between items-center bg-black flex-col text-white">
         <div className="flex  items-start w-full">
           <Link to="/">
-            <img src={backIconWhite} className="w-[38px] cursor-pointer" />
+            <img
+              src={backIconWhite}
+              className="w-[38px] cursor-pointer"
+              alt="Back"
+            />
           </Link>
         </div>
         <div className="flex flex-col items-center justify-center">
@@ -83,9 +89,9 @@ const Login = () => {
               className="w-full"
               value={email}
               onChange={handleEmail}
-              placeholder=" " // Use a space as a placeholder to trigger the label animation
+              placeholder=" "
             />
-            <label htmlFor="name">StudentMail</label>
+            <label htmlFor="email">Email</label>
           </div>
 
           <div className="inputGroup flex items-center justify-center">
@@ -96,9 +102,9 @@ const Login = () => {
               className="w-full"
               value={password}
               onChange={handlePassword}
-              placeholder=" " // Use a space as a placeholder to trigger the label animation
+              placeholder=" "
             />
-            <label htmlFor="name">Password</label>
+            <label htmlFor="password">Password</label>
           </div>
           <div>
             <button
@@ -106,7 +112,14 @@ const Login = () => {
               className="btn btn-outline-success py-2 px-6 font-semibold text-lg rounded-[60px]"
               disabled={loading}
             >
-              Login
+              {loading ? (
+                <div className="flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-white"></div>
+                  <span className="ml-2">Logging in...</span>
+                </div>
+              ) : (
+                "Login"
+              )}
             </button>
           </div>
         </form>

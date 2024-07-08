@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { app, db } from "./firebase/config";
 // import { doc, setDoc } from "firebase/firestore";
 import {
@@ -20,35 +20,34 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [errorEmail, setErrorEmail] = useState("");
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleName = (e) => {
     setName(e.target.value);
   };
+
   const handleUsername = (e) => {
     setUsername(e.target.value);
   };
+
   const handleEmail = (e) => {
     const inputEmail = e.target.value;
-
-    // Regex pattern to validate email ends with @run.edu.ng
     const emailPattern = /^[a-zA-Z0-9_.+-]+@run\.edu\.ng$/;
 
     if (emailPattern.test(inputEmail)) {
       setEmail(inputEmail);
-      setErrorEmail(""); // Clear error if email is valid
+      setErrorEmail("");
     } else {
       setEmail(inputEmail);
       setErrorEmail("Email must be in the format @run.edu.ng");
     }
-    // setEmail(e.target.value);
   };
+
   const handlePassword = (e) => {
     setPassword(e.target.value);
   };
 
   const handleSubmit = async (e) => {
-    console.log("log");
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -59,10 +58,9 @@ const SignUp = () => {
         email,
         password
       );
-      console.log(response);
       await sendEmailVerification(response.user);
       createUserProfile(response.user, username, name);
-      // navigate("/login");
+      navigate("/login");
     } catch (err) {
       setLoading(false);
       console.error(err);
@@ -71,27 +69,30 @@ const SignUp = () => {
     }
   };
 
-  const createUserProfile = (user, username, name) => {
-    const userDocRef = doc(db, "users", user.uid); // Reference to the user's document using their UID
+  const createUserProfile = async (user, username, name) => {
+    const userDocRef = doc(db, "users", user.uid);
     const userProfileData = {
       username: username,
       email: user.email,
       verificationStatus: user.emailVerified,
       name: name,
-      // Add other user-specific data as needed
     };
-    setDoc(userDocRef, userProfileData)
-      .then(() => {
-        return true;
-      })
-      .catch((error) => {
-        console.error("Error Creating user Profile", error);
-      });
+    try {
+      await setDoc(userDocRef, userProfileData);
+    } catch (error) {
+      console.error("Error Creating user Profile", error);
+    }
   };
+
   return (
-    <div className="flex w-full">
+    <div className="relative flex w-full">
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-75">
+          <div className="loader border-4 border-t-4 border-green-500 rounded-full w-16 h-16 animate-spin"></div>
+        </div>
+      )}
       <div className="h-screen md:w-1/3 md:flex p-3 justify-between items-center bg-black flex-col text-white hidden w-full">
-        <div className="flex  items-start w-full">
+        <div className="flex items-start w-full">
           <Link to="/">
             <img src={backIconWhite} className="w-[38px] cursor-pointer" />
           </Link>
@@ -102,7 +103,6 @@ const SignUp = () => {
           </Link>
           <span className="my-5 text-2xl text-center">LET GET YOU STARTED</span>
         </div>
-
         <div className="text-center flex flex-wrap gap-2 items-center justify-center">
           Already have an account?
           <Link to="/login" className="text-blue-400">
@@ -111,7 +111,7 @@ const SignUp = () => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-[24px] md:w-2/3 items-center justify-center w-full ">
+      <div className="flex flex-col gap-[24px] md:w-2/3 items-center justify-center w-full">
         <span className="text-2xl font-medium md:w-2/3 text-start">
           Create an Account
         </span>
@@ -119,7 +119,7 @@ const SignUp = () => {
         {error && <div className="text-red-500">{error}</div>}
 
         <form
-          className="md:w-2/3 flex justify-center items-center flex-col gap-[24] w-full p-2 "
+          className="md:w-2/3 flex justify-center items-center flex-col gap-[24px] w-full p-2"
           onSubmit={handleSubmit}
         >
           <div className="inputGroup flex items-center justify-center">
@@ -129,7 +129,7 @@ const SignUp = () => {
               autoComplete="off"
               className="w-full"
               onChange={handleName}
-              placeholder=" " // Use a space as a placeholder to trigger the label animation
+              placeholder=" "
               value={name}
             />
             <label htmlFor="name">Your Name</label>
@@ -142,7 +142,7 @@ const SignUp = () => {
               className="w-full"
               value={email}
               onChange={handleEmail}
-              placeholder=" " // Use a space as a placeholder to trigger the label animation
+              placeholder=" "
             />
             <label htmlFor="name">StudentMail</label>
           </div>
@@ -159,7 +159,7 @@ const SignUp = () => {
               className="w-full"
               value={username}
               onChange={handleUsername}
-              placeholder=" " // Use a space as a placeholder to trigger the label animation
+              placeholder=" "
             />
             <label htmlFor="name">Username</label>
           </div>
@@ -171,7 +171,7 @@ const SignUp = () => {
               className="w-full"
               value={password}
               onChange={handlePassword}
-              placeholder=" " // Use a space as a placeholder to trigger the label animation
+              placeholder=" "
             />
             <label htmlFor="name">Password</label>
           </div>
@@ -180,7 +180,6 @@ const SignUp = () => {
               type="submit"
               className="btn btn-outline-success py-6 px-10 rounded-[60px]"
               disabled={loading}
-              // onClick={handleSubmit}
             >
               Get Started
             </button>

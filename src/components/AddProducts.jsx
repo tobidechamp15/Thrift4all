@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { db } from "./firebase/config";
-import { doc, getDoc, addDoc, collection } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  addDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import Navbar from "./Navbar";
 
 const AddProducts = () => {
@@ -15,6 +22,7 @@ const AddProducts = () => {
   const [businessLink, setBusinessLink] = useState("");
   const [message, setMessage] = useState("");
   const [slideOut, setSlideOut] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const userId = localStorage.getItem("userId");
 
@@ -39,7 +47,6 @@ const AddProducts = () => {
         const userDocRef = doc(db, "users", userId);
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
-          console.log(userDoc.data().name);
           setUserName(userDoc.data().name);
         }
       };
@@ -47,21 +54,17 @@ const AddProducts = () => {
     }
   }, [userId]);
 
-  //   const getUserInfo = () => {
-  //     if (userId) {
-  //       const userProductRef = collection(db, "products", userId, "userProducts"); // Reference to a sub-collection under the user's document
+  useEffect(() => {
+    if (message) {
+      setSlideOut(false); // Reset slideOut state before showing message
+      const timer = setTimeout(() => {
+        setSlideOut(true);
+        setMessage(""); // Clear message after sliding out
+      }, 3000); // Slide out after 3 seconds
 
-  //       const userProductData = {
-  //         userName,
-  //         productName,
-  //         price,
-  //         productDescription,
-  //         businessLink,
-  //         imageSrc,
-  //         // Add other user-specific data as needed
-  //       };
-  //     }
-  //   };
+      return () => clearTimeout(timer); // Cleanup the timer on component unmount or when error changes
+    }
+  }, [message]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,7 +73,24 @@ const AddProducts = () => {
       return;
     }
 
+    setLoading(true);
+
     try {
+      // Check for duplicate product
+      const q = query(
+        collection(db, "products", userId, "userProducts"),
+        where("productName", "==", productName),
+        where("price", "==", price),
+        where("productDescription", "==", productDescription),
+        where("businessLink", "==", businessLink)
+      );
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        setMessage("Product with the same values already exists.");
+        setLoading(false);
+        return;
+      }
+
       const userProductRef = collection(db, "products", userId, "userProducts");
       await addDoc(userProductRef, {
         userName,
@@ -80,17 +100,13 @@ const AddProducts = () => {
         businessLink,
         imageSrc,
       });
-      combinedProducts();
-      // setPrice("");
-      // setBusinessLink("");
-      // setImageSrc("");
-      // setProductDescription("");
-      // setProductName("");
-      setUserName(userName);
+      await combinedProducts();
       setMessage("Product added successfully!");
     } catch (error) {
       console.error("Error adding product: ", error);
-      alert("Error adding product.");
+      setMessage("Error adding product.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -106,29 +122,22 @@ const AddProducts = () => {
         imageSrc,
         userId,
       });
-      useEffect(() => {
-        if (message) {
-          const timer = setTimeout(() => {
-            setSlideOut(true);
-          }, 3000); // Slide out after 3 seconds
-
-          return () => clearTimeout(timer); // Cleanup the timer on component unmount or when error changes
-        }
-      }, [message]);
     } catch (err) {
-      setMessage(err.message);
-      setSlideOut(false); // Ensure the error message slides in again
-      console.error(err);
+      console.error("Error adding combined product: ", err);
     }
-    setMessage("");
   };
 
   return (
-    <div className="flex items-center justify-center flex-col container py-4">
+    <div className="flex items-center justify-center flex-col container py-4 relative">
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50">
+          <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
+        </div>
+      )}
       {message && (
         <div
-          className={`text-red-500 fixed p-6 top-0 right-[10px] text-xl shadow-xl rounded-lg m-4 ${
-            slideOut ? "slide-out" : ""
+          className={`fixed top-4 right-4 z-50 p-4 text-white bg-green-500 rounded-lg shadow-lg transition-transform ${
+            slideOut ? "transform translate-x-full" : ""
           }`}
         >
           {message}
@@ -136,7 +145,7 @@ const AddProducts = () => {
       )}
       <Navbar />
       <div>
-        <span className=" text-2xl font-[Pacifico] text-green-500 font-medium">
+        <span className="text-2xl font-[Pacifico] text-green-500 font-medium">
           Add Products
         </span>
       </div>
@@ -150,7 +159,7 @@ const AddProducts = () => {
             required
             autoComplete="off"
             className="w-full font-bold"
-            placeholder=" " // Use a space as a placeholder to trigger the label animation
+            placeholder=" "
             value={userName}
             disabled
           />
@@ -162,7 +171,7 @@ const AddProducts = () => {
             required
             autoComplete="off"
             className="w-full"
-            placeholder=" " // Use a space as a placeholder to trigger the label animation
+            placeholder=" "
             value={productName}
             onChange={(e) => setProductName(e.target.value)}
           />
@@ -174,14 +183,14 @@ const AddProducts = () => {
             required
             autoComplete="off"
             className="w-full no-spin"
-            placeholder=" " // Use a space as a placeholder to trigger the label animation
+            placeholder=" "
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
           <label htmlFor="name">Price</label>
         </div>
         <div
-          className=" border-dashed border-2 w-fit p-4 border-[#bdbdbd] flex flex-col cursor-pointer"
+          className="border-dashed border-2 w-fit p-4 border-[#bdbdbd] flex flex-col cursor-pointer"
           onClick={handleImageClick}
         >
           {imageSrc ? (
@@ -211,7 +220,7 @@ const AddProducts = () => {
             className="w-full"
             value={productDescription}
             onChange={(e) => setProductDescription(e.target.value)}
-            placeholder=" " // Use a space as a placeholder to trigger the label animation
+            placeholder=" "
           />
           <label htmlFor="name">Product Description</label>
         </div>
@@ -223,7 +232,7 @@ const AddProducts = () => {
             className="w-full"
             value={businessLink}
             onChange={(e) => setBusinessLink(e.target.value)}
-            placeholder=" " // Use a space as a placeholder to trigger the label animation
+            placeholder=" "
           />
           <label htmlFor="name">Link to Business Page</label>
         </div>
