@@ -1,4 +1,10 @@
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  setDoc,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db, userId } from "./firebase/config";
 import Sidebar from "./Sidebar";
@@ -33,6 +39,35 @@ const UserProducts = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const moveToDeletedProducts = async (product) => {
+    try {
+      const deletedProductDoc = doc(
+        db,
+        "deletedProducts",
+        userId,
+        "userDeletedProducts",
+        product.id
+      );
+      await setDoc(deletedProductDoc, product);
+    } catch (err) {
+      console.error("Error moving product to deletedProducts:", err);
+    }
+  };
+
+  const deleteProduct = async (productId) => {
+    try {
+      const productDoc = doc(db, "products", userId, "userProducts", productId);
+      const deletedProduct = products.find(
+        (product) => product.id === productId
+      );
+      await moveToDeletedProducts(deletedProduct);
+      await deleteDoc(productDoc);
+      setProducts(products.filter((product) => product.id !== productId));
+    } catch (err) {
+      console.error("Error deleting product:", err);
+    }
+  };
+
   return (
     <div className="container mx-auto p-4">
       <Navbar />
@@ -59,12 +94,20 @@ const UserProducts = () => {
                 <p className="text-gray-700 mt-2">
                   {product.productDescription}
                 </p>
-                <a
-                  href={product.businessLink}
-                  className="text-blue-500 hover:underline mt-4 block"
-                >
-                  Business Page
-                </a>
+                <div className="flex justify-between ">
+                  <a
+                    href={product.businessLink}
+                    className="text-blue-500 hover:underline mt-4 block"
+                  >
+                    Business Page
+                  </a>
+                  <button
+                    onClick={() => deleteProduct(product.id)}
+                    className="text-red-500 hover:text-red-700 mt-4"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           ))}

@@ -22,7 +22,7 @@ const Navbar = () => {
     <div className="flex justify-between md:justify-around py-4 w-full items-center">
       <Link
         to="/"
-        className="text-3xl font-bold text-gray-800 hover:text-gray-900 transition duration-300"
+        className="text-3xl font-bold text-green-500 hover:text-green-600 transition duration-300 text-[Pacifico]"
       >
         Thrift4all
       </Link>
@@ -30,28 +30,28 @@ const Navbar = () => {
         <div className="md:flex gap-4">
           <Link
             to="/products"
-            className="text-lg text-gray-600 hover:text-gray-900 transition duration-300"
+            className="text-lg text-green-600 font-medium hover:text-green-900 font transition duration-300"
           >
             Home
           </Link>
           <Link
             to="/user-products"
-            className="text-lg text-gray-600 hover:text-gray-900 transition duration-300"
+            className="text-lg text-green-600 font-medium hover:text-green-900 font transition duration-300"
           >
             Products
           </Link>
           <Link
             to="/addproducts"
-            className="text-lg text-gray-600 hover:text-gray-900 transition duration-300"
+            className="text-lg text-green-600 font-medium hover:text-green-900 font transition duration-300"
           >
             Add Products
           </Link>
-          <span className="text-lg text-gray-600">Contact</span>
+          <span className="text-lg text-green-600 font-medium">Contact</span>
         </div>
       </div>
       <div
         onClick={handleLogOut}
-        className="text-lg text-red-600 cursor-pointer hidden md:block"
+        className="text-lg badge badge-danger text-red-600 cursor-pointer hidden md:block"
       >
         LOGOUT
       </div>
