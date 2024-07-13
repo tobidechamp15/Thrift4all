@@ -12,6 +12,7 @@ import Login from "./components/Login";
 import AddProducts from "./components/AddProducts";
 import UserProducts from "./components/UserProducts";
 import Landing from "./components/Landing";
+import DeletedProducts from "./components/DeletedProducts";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/user-products",
     element: <UserProducts />,
+  },
+  {
+    path: "/deleted-products",
+    element: <DeletedProducts />,
   },
 ]);
 const root = ReactDOM.createRoot(document.getElementById("root"));

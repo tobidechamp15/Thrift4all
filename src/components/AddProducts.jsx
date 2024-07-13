@@ -150,7 +150,7 @@ const AddProducts = () => {
         </span>
       </div>
       <form
-        className="w-[60%] xsm:w-full py-4 flex flex-col gap-7 items-center"
+        className="w-[100%] xsm:w-full py-4 flex flex-col gap-7 items-center"
         onSubmit={handleSubmit}
       >
         <div className="inputGroup flex items-center justify-center">

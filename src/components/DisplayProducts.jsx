@@ -63,7 +63,7 @@ const DisplayProducts = () => {
                   {product.productName}
                 </div>
                 <div className="text-gray-700 mb-2">
-                  Price: ${product.price}
+                  Price: #{product.price}
                 </div>
                 <button
                   onClick={() => handleViewProduct(product)}
