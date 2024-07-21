@@ -111,7 +111,7 @@ const SignUp = () => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-[24px] md:w-2/3 items-center justify-center w-full">
+      <div className="flex flex-col gap-[24px] md:w-2/3 items-center justify-center  xsm:min-h-screen xsm:w-full">
         <span className="text-2xl font-medium md:w-2/3 text-start">
           Create an Account
         </span>
@@ -119,7 +119,7 @@ const SignUp = () => {
         {error && <div className="text-red-500">{error}</div>}
 
         <form
-          className="md:w-[100%] flex justify-center items-center flex-col gap-[24px] w-full p-2"
+          className=" flex justify-center items-center flex-col gap-[24px] p-2 w-[75%]"
           onSubmit={handleSubmit}
         >
           <div className="inputGroup flex items-center justify-center">

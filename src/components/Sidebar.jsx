@@ -28,10 +28,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         <Link to="/addproducts" className="nav-items">
           Add Products
         </Link>
-        <Link
-          to="/deleted-products"
-          className="text-lg text-green-600 font-medium hover:text-green-900 font transition duration-300"
-        >
+        <Link to="/deleted-products" className="nav-items">
           Deleted Products
         </Link>
         <span className="nav-items">Contact</span>

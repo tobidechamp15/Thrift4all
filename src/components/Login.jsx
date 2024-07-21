@@ -45,7 +45,7 @@ const Login = () => {
 
   return (
     <div className="flex w-full">
-      <div className="h-screen md:w-1/3 flex p-3 justify-between items-center bg-black flex-col text-white">
+      <div className="h-screen hidden md:w-1/3 md:flex p-3 justify-between items-center bg-black flex-col text-white">
         <div className="flex  items-start w-full">
           <Link to="/">
             <img
@@ -70,15 +70,15 @@ const Login = () => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-[24px] w-2/3 items-center justify-center">
-        <span className="text-3xl w-2/3 text-start font-semibold">
+      <div className="flex flex-col gap-[54px] w-2/3 items-center justify-center xsm:h-screen xsm:w-full">
+        <span className="text-3xl w-2/3 md:text-start text-center font-semibold">
           Welcome Back
         </span>
 
         {error && <div className="text-red-500">{error}</div>}
 
         <form
-          className="w-2/3 flex justify-center items-center flex-col gap-[24] "
+          className="w-[70%] flex justify-center items-center flex-col gap-[24px] "
           onSubmit={handleSubmit}
         >
           <div className="inputGroup flex items-center justify-center">
