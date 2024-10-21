@@ -70,7 +70,12 @@ const Login = () => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-[54px] w-2/3 items-center justify-center xsm:h-screen xsm:w-full">
+      <div className="flex flex-col gap-[54px] w-2/3 items-center justify-evenly xsm:h-screen xsm:w-full">
+        <div className="flex md:hidden flex-col items-center justify-center ">
+          <Link to="/" className="logoStyle text-6xl">
+            Thrift4all
+          </Link>
+        </div>
         <span className="text-3xl w-2/3 md:text-start text-center font-semibold">
           Welcome Back
         </span>
@@ -123,6 +128,12 @@ const Login = () => {
             </button>
           </div>
         </form>
+        <div className="mt-[50px] flex md:hidden">
+          Do not have an account yet?
+          <Link to="/signup" className="text-blue-400">
+            {""} Get Started
+          </Link>
+        </div>
       </div>
     </div>
   );

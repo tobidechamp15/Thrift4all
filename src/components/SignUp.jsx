@@ -112,6 +112,11 @@ const SignUp = () => {
       </div>
 
       <div className="flex flex-col gap-[24px] md:w-2/3 items-center justify-center  xsm:min-h-screen xsm:w-full">
+        <div className="flex md:hidden flex-col items-center justify-center mb-[50px] ">
+          <Link to="/" className="logoStyle text-6xl">
+            Thrift4all
+          </Link>
+        </div>
         <span className="text-2xl font-medium md:w-2/3 text-start">
           Create an Account
         </span>
@@ -183,6 +188,12 @@ const SignUp = () => {
             >
               Get Started
             </button>
+          </div>
+          <div className="text-center flex flex-wrap gap-2 items-center justify-center">
+            Already have an account?
+            <Link to="/login" className="text-blue-400">
+              Login
+            </Link>
           </div>
         </form>
       </div>
